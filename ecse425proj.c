@@ -47,9 +47,23 @@ void displayMat(int rows, int cols, const double *vPtr)
 
 void matMult(int N, const double *matA, const double *matB, double *matC)
 {
+	int i, j, z;
+	double temp = 0.0;
+
     if(dlayout == RowMaj)
     {
         // Code in your naive implementation here
+
+        for (j = 0; j < N; j++) {
+        	for (i = 0; i < N; i++) {
+        		
+        		temp += matA[i] * matB[j + i*N];
+
+        	}
+
+        	matC[j] = temp;
+        	temp = 0.0;
+        }
     }
 
 }
