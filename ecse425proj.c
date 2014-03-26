@@ -53,17 +53,18 @@ void matMult(int N, const double *matA, const double *matB, double *matC)
     if(dlayout == RowMaj)
     {
         // Code in your naive implementation here
+	    for (z = 0; z < N; z++) {	
+	        for (j = 0; j < N; j++) {
+	        	for (i = 0; i < N; i++) {
+	        		
+	        		temp += matA[i] * matB[j + i*N];
 
-        for (j = 0; j < N; j++) {
-        	for (i = 0; i < N; i++) {
-        		
-        		temp += matA[i] * matB[j + i*N];
+	        	}
 
-        	}
-
-        	matC[j] = temp;
-        	temp = 0.0;
-        }
+	        	matC[j + z] = temp;
+	        	temp = 0.0;
+	        }
+	    }
     }
 
 }
