@@ -45,28 +45,27 @@ void displayMat(int rows, int cols, const double *vPtr)
     }
 }
 
+// Naive implementation [O(n^3) time]
 void matMult(int N, const double *matA, const double *matB, double *matC)
 {
-	int i, j, z;
-	double temp = 0.0;
+	int i, j, k;
+	double tempAdd = 0.0;
 
-    if(dlayout == RowMaj)
-    {
-        // Code in your naive implementation here
-	    for (z = 0; z < N; z++) {	
-	        for (j = 0; j < N; j++) {
-	        	for (i = 0; i < N; i++) {
-	        		
-	        		temp += matA[i] * matB[j + i*N];
+    if (dlayout == RowMaj) {
 
-	        	}
+	    for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                for (k = 0; k < N; k++) {
 
-	        	matC[j + z] = temp;
-	        	temp = 0.0;
-	        }
-	    }
+                    tempAdd += matA[i*N + k] * matB[j + k*N];
+                }
+
+                matC[i+j] = tempAdd;
+                tempAdd = 0.0;
+            }
+        }
+
     }
-
 }
 
 void matVecMult(int N, const double *matA, const double *vecB, double *vecC)
