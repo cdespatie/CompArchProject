@@ -13,5 +13,5 @@ SOURCE="main.c ecse425proj.c ecse425projOPT.c"
 [ -d build ] || mkdir build
 
 # compile! (this will generate an executable named "ecse425proj" in
-# the directory "build/")
+# the directory "build/")!
 gcc $FLAGS $SOURCE -o build/ecse425proj

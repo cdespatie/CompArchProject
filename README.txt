@@ -38,3 +38,5 @@
   results per function call or even per code line, by executing the
   following command: $> cg_annotate cachegrind.out.<pid> Refer to the
   valgrind manual section "cachegrind" for more details.
+  
+  !
