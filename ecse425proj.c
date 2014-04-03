@@ -68,11 +68,23 @@ void matMult(int N, const double *matA, const double *matB, double *matC)
     }
 }
 
+// Naive implementation [O(n^2) time]
 void matVecMult(int N, const double *matA, const double *vecB, double *vecC)
 {
-    if(dlayout == RowMaj)
-    {
-        // Code in your naive implementation here
+    int i, j;
+    double temp = 0.0;
+
+    if(dlayout == RowMaj) {
+
+        for (i = 0; i < N; i++) {
+            for (j = 0; j < N; j++) {
+                temp += matA[j + i*N] * vecB[j];
+            }
+
+            vecC[i] = temp;
+            temp = 0.0;
+        }
+
     }
 }
 
