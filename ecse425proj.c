@@ -60,7 +60,7 @@ void matMult(int N, const double *matA, const double *matB, double *matC)
                     tempAdd += matA[i*N + k] * matB[j + k*N];
                 }
 
-                matC[i + j*N] = tempAdd;
+                matC[j + i*N] = tempAdd;
                 tempAdd = 0.0;
             }
         }
