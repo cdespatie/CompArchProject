@@ -58,6 +58,7 @@ static void transposeMatrix(const double *matX, double *matY, int N) {
  			// matX[j*N + i] = temp; 
 
  			matY[i*N + j] = matX[j*N + i];
+ 			printf("\nMatX: %f", matX[j*N + i]);
  			matY[j*N + i] = matX[i*N + j];
 
 		}
