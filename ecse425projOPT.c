@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void transposeMatrix(const double *matX, int N);
+static void transposeMatrix(double *matX, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
@@ -41,9 +41,9 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
-static void transposeMatrix(const double *matX, int N) {
+static void transposeMatrix(double *matX, int N) {
 	int i, j;
-	double temp
+	double temp = 0.0;
 
 	for (i = 0; i < N - 2; i++) {
 		for (j = i + 1; j < N - 1; j++) {
