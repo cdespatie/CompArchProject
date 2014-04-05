@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-static double* transposeMatrix(double *matX, int N);
+static double* transposeMatrix(const double *matX, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
@@ -39,16 +39,14 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 // Transpose matrix matX in place [O(1) space requirement]
 static double* transposeMatrix(const double *matX, int N) {
 	int i, j;
-	double temp;
-	double *matY = matX;
+	double *matY = malloc(N * N * sizeof(double));
 
 	for (i = 0; i < N - 2; i++) {
 		for (j = i + 1; j < N - 1; j++) {
 
 			// Swap matX(i,j) and matX(j,i)
-			temp = matY[i*N + j];
-			matY[i*N + j] = matY[j*N + i];
-			matY[j*N + i] = temp;
+			matY[i*N + j] = matX[j*N + i];
+			matY[j*N + i] = matX[i*N + j];
 		}
 	}
 
