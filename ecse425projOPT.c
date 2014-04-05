@@ -1,6 +1,8 @@
 #include "ecse425projOPT.h"
 #include "ecse425proj.h"
 
+static void transposeMatrix(double *matX, int N);
+
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
     
@@ -31,7 +33,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
-static void transposeMatrix(const double *matX, int N) {
+static void transposeMatrix(double *matX, int N) {
 	int i, j;
 	double temp;
 
