@@ -45,7 +45,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 // Transpose matrix matX in place [O(1) space requirement]
 static double* transposeMatrix(const double *matX, int N) {
 	int i, j;
-	double temp = 0.0;
+	// double temp = 0.0;
 	double *matY = malloc(N*N*sizeof(double));
 
 	for (i = 0; i < N - 2; i++) {
@@ -63,4 +63,5 @@ static double* transposeMatrix(const double *matX, int N) {
 		}
 	}
 
+	return matY;
 }
