@@ -45,23 +45,12 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 // Transpose matrix matX in place [O(1) space requirement]
 static void transposeMatrix(const double *matX, double *matY, int N) {
 	int i, j;
-	// double temp = 0.0;
-	
 
-	for (i = 0; i < N - 2; i++) {
-		for (j = i + 1; j < N - 1; j++) {
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
 
-			// Swap matX(i,j) and matX(j,i)\
-			
-			// temp = matX[i*N + j];
- 			// matX[i*N + j] = matX[j*N + i];
- 			// matX[j*N + i] = temp; 
-
- 			matY[i*N + j] = matX[j*N + i];
- 			printf("\nMatX: %f", matX[j*N + i]);
- 			matY[j*N + i] = matX[i*N + j];
+			matY[j + i*N] = matX[i + j*N];
 
 		}
 	}
-
 }
