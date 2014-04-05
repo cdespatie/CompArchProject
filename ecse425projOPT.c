@@ -18,14 +18,8 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     double temp = 0.0;
     double *matY = malloc(N*N*sizeof(double));
 
-    printf("\nOriginal matrix:\n");
-    displayMat(N, N, matB);
-
     // Transpose matB for sequential memory access during multiply
    	transposeMatrix(matB, matY, N);
-
-    printf("\nTransposed matrix:\n");
-    displayMat(N, N, matY);
 
     for (i = 0; i < N; i++) {
     	for (j = 0; j < N; j++) {
