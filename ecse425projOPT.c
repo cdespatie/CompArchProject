@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static double* transposeMatrix(const double *matX, int N);
+static void transposeMatrix(const double *matX, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
@@ -18,10 +18,10 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     double temp = 0.0;
 
     // Transpose matB for sequential memory access during multiply
-    double *matY = transposeMatrix(matB, N);
+    transposeMatrix(matB, N);
 
     printf("\nTransposed matrix:\n");
-    displayMat(N, N, matY);
+    displayMat(N, N, matB);
 
     printf("Transpose OK\n");
 
@@ -29,7 +29,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     	for (j = 0; j < N; j++) {
     		for (m = 0; m < N; m++) {
 
-    			temp += matA[i*N + m] * matY[j*N + m];
+    			temp += matA[i*N + m] * matB[j*N + m];
 
     		}
 
@@ -41,19 +41,18 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
-static double* transposeMatrix(const double *matX, int N) {
+static void transposeMatrix(const double *matX, int N) {
 	int i, j;
-	double *matY = malloc(N * N * sizeof(double));
+	double temp
 
 	for (i = 0; i < N - 2; i++) {
 		for (j = i + 1; j < N - 1; j++) {
 
 			// Swap matX(i,j) and matX(j,i)
-			matY[i*N + j] = matX[j*N + i];
-			matY[j*N + i] = matX[i*N + j];
+			temp = matX[i*N + j];
+ 			matX[i*N + j] = matX[j*N + i];
+ 			matX[j*N + i] = temp;
 		}
 	}
-
-	return matY;
 
 }
