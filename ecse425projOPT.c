@@ -52,10 +52,10 @@ static double* transposeMatrix(const double *matX, int N) {
 		for (j = i + 1; j < N - 1; j++) {
 
 			// Swap matX(i,j) and matX(j,i)\
-			/*
-			temp = matX[i*N + j];
- 			matX[i*N + j] = matX[j*N + i];
- 			matX[j*N + i] = temp; */
+			
+			// temp = matX[i*N + j];
+ 			// matX[i*N + j] = matX[j*N + i];
+ 			// matX[j*N + i] = temp; 
 
  			matY[i*N + j] = matX[j*N + i];
  			matY[j*N + i] = matX[i*N + j];
