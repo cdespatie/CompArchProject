@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void transposeMatrix(const double *matX, int N);
+static void transposeMatrix(const double *matX, double *matY, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
@@ -22,7 +22,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     displayMat(N, N, matB);
 
     // Transpose matB for sequential memory access during multiply
-    matY = transposeMatrix(matB, matY, N);
+   	transposeMatrix(matB, matY, N);
 
     printf("\nTransposed matrix:\n");
     displayMat(N, N, matY);
