@@ -164,6 +164,7 @@ int main(int argc, const char *argv[])
                 // Display results (don't use for large matrices)
                 if(disp)
                 {
+                    printf("I'm in matrix print and that's awesome.");
                     displayMat(N,N,matA);
                     printf("\n");
                     displayMat(N,N,matB);
@@ -223,6 +224,7 @@ int main(int argc, const char *argv[])
                 // Display results (don't use for large matrices)
                 if(disp)
                 {
+                    printf("I'm in vector print and I don't know why\n");
                     displayMat(N,N,matA);
                     printf("\n");
                     displayVec(N,vecB);
