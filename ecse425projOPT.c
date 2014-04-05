@@ -1,6 +1,8 @@
 #include "ecse425projOPT.h"
 #include "ecse425proj.h"
 
+#include <stdio.h>
+
 static void transposeMatrix(double *matX, int N);
 
 
