@@ -17,6 +17,8 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     // Transpose matB for sequential memory access during multiply
     transposeMatrix(matB, N);
 
+    printf("Transpose OK\n");
+
     for (i = 0; i < N; i++) {
     	for (j = 0; j < N; j++) {
     		for (m = 0; m < N; m++) {
