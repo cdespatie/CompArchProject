@@ -2,6 +2,7 @@
 #include "ecse425proj.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 static double* transposeMatrix(const double *matX, int N);
 
