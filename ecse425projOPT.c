@@ -27,7 +27,6 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     		for (m = 0; m < N; m++) {
 
     			temp += matA[i*N + m] * matY[j*N + m];
-    			printf("i: %d, j: %d, m:%d", i, j, m);
 
     		}
 
