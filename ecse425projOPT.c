@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static double* transposeMatrix(const double *matX, int N);
+static void transposeMatrix(const double *matX, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
@@ -22,7 +22,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     displayMat(N, N, matB);
 
     // Transpose matB for sequential memory access during multiply
-    matY = transposeMatrix(matB, N);
+    matY = transposeMatrix(matB, matY, N);
 
     printf("\nTransposed matrix:\n");
     displayMat(N, N, matY);
@@ -43,10 +43,10 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
-static double* transposeMatrix(const double *matX, int N) {
+static void transposeMatrix(const double *matX, double *matY, int N) {
 	int i, j;
 	// double temp = 0.0;
-	double *matY = malloc(N*N*sizeof(double));
+	
 
 	for (i = 0; i < N - 2; i++) {
 		for (j = i + 1; j < N - 1; j++) {
@@ -63,5 +63,4 @@ static double* transposeMatrix(const double *matX, int N) {
 		}
 	}
 
-	return matY;
 }
