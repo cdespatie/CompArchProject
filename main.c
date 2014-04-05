@@ -169,7 +169,7 @@ int main(int argc, const char *argv[])
                     printf("\n");
                     displayMat(N,N,matB);
                     printf("\n");
-                    displayMat(N,N,matC2);
+                    displayMat(N,N,matC1);
                     printf("\n");
                 }
 
