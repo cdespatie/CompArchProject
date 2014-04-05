@@ -9,7 +9,7 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
 
 void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
    
-    int j,k,m;
+    int j,i,m;
     double temp = 0.0;
 
     // Transpose matB for sequential memory access during multiply
@@ -31,7 +31,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
-static void transposeMatrix(double *matX, int N) {
+static void transposeMatrix(const double *matX, int N) {
 	int i, j;
 	double temp;
 
