@@ -24,8 +24,7 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
         			temp += matA[y + x*N] * vecB[y];
         		}
 
-        		vecC[y] = temp;
-        		printf("Temp: %f\n", temp);
+        		vecC[x] = temp;
         		temp = 0.0;
         	}
         } 
