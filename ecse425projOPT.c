@@ -20,12 +20,12 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
         for (j = 0; j < N; j+=B) {
 
         	for (x = i; x < MIN(i + B, N); x++) {
+        		temp = vecC[x];
         		for (y = j; y < MIN(j + B, N); y++) {
         			temp += matA[y + x*N] * vecB[y];
         		}
 
         		vecC[x] = temp;
-        		temp = 0.0;
         	}
         } 
     }
