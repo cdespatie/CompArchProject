@@ -16,6 +16,38 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
 	int i, j, x, y;
 	double temp = 0.0;
     
+    // Let's try loop blocking again!
+    double *Apos1 = &matA[0];
+    double *Apos2 = &matA[1];
+    double *ypos  = &vecC[0];
+
+    for (i = 0; i < N / 2; i ++) {
+        double ytemp1 = 0;
+        double ytemp2 = 0;
+        double *xpos = &vecB[0];
+
+        for (j = 0; j < N; j++) {
+
+            ytemp1 += (*Apos1++) * (*xpos);
+            ytemp2 += (*Apos2++) * (*xpos);
+
+            xpos++;
+
+        }
+
+        *ypos = ytemp1;
+        ypos++;
+        *ypos = ytemp2;
+
+        ypos++;
+
+        Apos1 += N;
+        Apos2 += N;
+    }
+
+
+    // 'Naive' attempt
+    /*
 	for (i = 0; i < N; i++) {
         temp = vecC[i];
         for (j = 0; j < N; j++) {
@@ -25,7 +57,7 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
 
         vecC[i] = temp;
     }
-
+    */
 }
 
 void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
