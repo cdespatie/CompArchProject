@@ -17,17 +17,13 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
 	double temp = 0.0;
     
 	for (i = 0; i < N; i+=B) {
+        temp = vecC[x];
         for (j = 0; j < N; j+=B) {
-
-        	for (x = i; x < MIN(i + B, N); x++) {
-        		temp = vecC[x];
-        		for (y = j; y < MIN(j + B, N); y++) {
-        			temp += matA[y + x*N] * vecB[y];
-        		}
-
-        		vecC[x] = temp;
-        	}
-        } 
+        		
+        	temp += matA[y + x*N] * vecB[y];	
+        }
+        
+        vecC[x] = temp;
     }
 
 }
