@@ -15,17 +15,12 @@ static void transposeMatrix(const double *matX, double *matY, int N);
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
 	int i, j, x, y;
 	double temp = 0.0;
-    double *Apos = &matA[0];
     
 	for (i = 0; i < N; i++) {
-        
-        double *xpos = &vecB[0];
-        temp = 0;
-
+        temp = vecC[i];
         for (j = 0; j < N; j++) {
         		
-        	//temp += matA[j + i*N] * vecB[j];	
-            temp += (*Apos++) * (*xpos++);
+        	temp += matA[j + i*N] * vecB[j];	
         }
 
         vecC[i] = temp;
