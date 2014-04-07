@@ -28,7 +28,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
    	transposeMatrix(matB, matY, N);
 
    	// Old matrix multiplication w\o loop tiling
-   	/*
+   	
     for (i = 0; i < N; i++) {
     	for (j = 0; j < N; j++) {
     		for (m = 0; m < N; m++) {
@@ -41,9 +41,10 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     		temp = 0.0;
     	}
     }
-    */
+    
 
     // New matrix multiplication w\ loop tiling
+    /*
     for (i = 0; i < N; i += B) {
     	for (j = 0; j < N; j += B) {
     		for (m = 0; m < N; m+= B) {
@@ -63,22 +64,19 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     		}
     	}
     }
+    */
 
 }
 
 // Transpose matrix matX in place [O(1) space requirement]
 static void transposeMatrix(const double *matX, double *matY, int N) {
 	int i, j;
-	int x, y;
 
-	for (i = 0; i < N; i+=B) {
-		for (j = 0; j < N; j+=B) {
-			for (x = i; x < MIN(i + B, N); z++) {
-				for (y = j; j < MIN(j + B, N); j++) {
+	for (i = 0; i < N; i++) {
+		for (j = 0; j < N; j++) {
 
-					matY[y + x*N] = matX[y + x*N];
-				}
-			}
+			matY[j + i*N] = matX[i + j*N];
+
 		}
 	}
 }
