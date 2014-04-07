@@ -62,12 +62,12 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     
     for (i = 0; i < N; i += B) {
     	for (j = 0; j < N; j += B) {
-    		for (m = 0; m < N; m+= B) {
+    		for (m = 0; m < N; m += B) {
 
-    			for (x = i; x < MIN(i + B, N); x++) {
-    				for (y = j; y < MIN(j + B, N); y++) {
-    					for (z = m; z < MIN(m + B, N); z++) {
-    						printf("Min: %d", MIN(m + B, N));
+    			for (x = i; x < i + B; x++) {
+    				for (y = j; y < j + B; y++) {
+    					for (z = m; z < m + B; z++) {
+
     						temp += matA[x*N + z] * matY[y*N + z];
 
     					}
