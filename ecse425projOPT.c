@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define B 	(64 / sizeof(double))
+#define B 	(64 / sizeof(double))		// Block size fits inside one cache line!
 
 #define MAX(a,b) ((a) > (b) ? a : b)
 #define MIN(a,b) ((a) < (b) ? a : b)
@@ -13,8 +13,22 @@ static void transposeMatrix(const double *matX, double *matY, int N);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
+	int i, j, x, y;
     
-    // Code in your optimized implementation here!
+	for (i = 0; i < N; i+=B) {
+        for (j = 0; j < N; j+=B) {
+
+        	for (x = i; x < MIN(i + B, N); x++) {
+        		for (y = j; j < MIN(j + B, N); y++) {
+        			temp += matA[y + x*N] * vecB[y];
+        		}
+
+        		vecC[y] = temp;
+        		temp = 0.0;
+        	}
+        } 
+    }
+    
 }
 
 void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
@@ -44,7 +58,6 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     */
 
     // New matrix multiplication w\ loop tiling
-    
     for (i = 0; i < N; i += B) {
     	for (j = 0; j < N; j += B) {
     		for (m = 0; m < N; m+= B) {
@@ -68,7 +81,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 
 }
 
-// Transpose matrix matX in place [O(1) space requirement]
+// Transpose matrix matX
 static void transposeMatrix(const double *matX, double *matY, int N) {
 	int i, j;
 
