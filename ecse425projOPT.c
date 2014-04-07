@@ -68,11 +68,11 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     				for (y = j; y < MIN(j + B, N); y++) {
     					for (z = m; z < MIN(m + B, N); z++) {
 
-    						temp += matA[x*MIN(m + B, N) + z] * matY[y*MIN(m + B, N) + z];
+    						temp += matA[x*MIN(i + B, N) + z] * matY[y*MIN(j + B, N) + z];
 
     					}
 
-    					matC[y + x*MIN(j + B, N)] = temp;
+    					matC[y + x*MIN(i + B, N)] = temp;
     					temp = 0.0;
     				}
     			}
