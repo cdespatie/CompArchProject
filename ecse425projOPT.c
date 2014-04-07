@@ -43,7 +43,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
    	transposeMatrix(matB, matY, N);
 
    	// Old matrix multiplication w\o loop tiling
-   	/*
+   	
     for (i = 0; i < N; i++) {
     	for (j = 0; j < N; j++) {
     		for (m = 0; m < N; m++) {
@@ -56,9 +56,10 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     		temp = 0.0;
     	}
     }
-    */
+    
 
     // New matrix multiplication w\ loop tiling
+    /*
     for (i = 0; i < N; i += B) {
     	for (j = 0; j < N; j += B) {
     		for (m = 0; m < N; m+= B) {
@@ -67,8 +68,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     				for (y = j; y < MIN(j + B, N); y++) {
     					for (z = m; z < MIN(m + B, N); z++) {
 
-    						temp += matA[x*N + z] * matY[y + z*N];
-    						
+    						temp += matA[x*N + z] * matY[y*N + z];
 
     					}
 
@@ -79,7 +79,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     		}
     	}
     }
-    
+    */
 
 }
 
