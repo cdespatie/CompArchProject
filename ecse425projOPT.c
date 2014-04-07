@@ -14,6 +14,7 @@ static void transposeMatrix(const double *matX, double *matY, int N);
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
 	int i, j, x, y;
+	double temp = 0.0;
     
 	for (i = 0; i < N; i+=B) {
         for (j = 0; j < N; j+=B) {
@@ -28,7 +29,7 @@ void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC)
         	}
         } 
     }
-    
+
 }
 
 void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
