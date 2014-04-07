@@ -227,7 +227,11 @@ int main(int argc, const char *argv[])
                     printf("\n");
                     displayVec(N,vecB);
                     printf("\n");
-                    displayVec(N,vecC1);
+                    if (execOPT) {
+                        displayVec(N,vecC2);
+                    } else {
+                        displayVec(N,vecC1);
+                    }
                     printf("\n");
                 }
 
