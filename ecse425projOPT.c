@@ -71,7 +71,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 
     					}
 
-    					matC[y + x*N] = temp;
+    					matC[y + x*B] = temp;
     					temp = 0.0;
     				}
     			}
