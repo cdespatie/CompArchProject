@@ -68,8 +68,8 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
 
     if (isPowerOfTwo(N)) {
 
-        *matY = malloc((N+1)*(N+1)*sizeof(double));
-        *matH = malloc((N+1)*(N+1)*sizeof(double));
+        *matY = (double *) malloc((N+1)*(N+1)*sizeof(double));
+        *matH = (double *) malloc((N+1)*(N+1)*sizeof(double));
         padMatrix(matA, matH, N);
         transposeAndPadMatrix(matB, matY, N);
 
@@ -97,7 +97,7 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
         }
 
     } else {
-        *matY = malloc(N*N*sizeof(double));
+        *matY = (double *) malloc(N*N*sizeof(double));
         transposeMatrix(matB, matY, N);
 
         for (i = 0; i < N; i += B) {
@@ -145,7 +145,7 @@ static void transposeMatrix(const double *matX, double *matY, int N) {
 // Also transposes!
 static void transposeAndPadMatrix(const double *matX, double *matY, int N) {
 
-    int newDimensions, limit;
+    int newDimensions;
     int i, j;
 
     newDimensions = N + 1;
@@ -169,7 +169,7 @@ static void transposeAndPadMatrix(const double *matX, double *matY, int N) {
 static void padMatrix(const double *matX, double *matY, int N) {
 
     int i, j;
-    int newDimensions, limit;
+    int newDimensions;
 
     newDimensions = N + 1;
 
