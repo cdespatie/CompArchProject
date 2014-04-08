@@ -4,20 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define B 	(64 / sizeof(double))		// Block size fits inside one cache line!
+#define B   (64 / sizeof(double))       // Block size fits inside one cache line!
 
 #define MAX(a,b) ((a) > (b) ? a : b)
 #define MIN(a,b) ((a) < (b) ? a : b)
 
 static void transposeMatrix(const double *matX, double *matY, int N);
-static void transposeAndPadMatrix(const double *matX, double *matY, int N);
-static void padMatrix(const double *matX, double *matY, int N);
-static int isPowerOfTwo (unsigned int x);
 
 
 void matVecMult_opt(int N, const double *matA, const double *vecB, double *vecC) {
-	int i, j, x, y;
-	double temp = 0.0;
+    int i, j, x, y;
+    double temp = 0.0;
     
     // Let's try loop blocking again!
     // This implementation is inspired by the page at:
@@ -59,138 +56,45 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     int j,i,m;
     int x,y,z;
     double temp = 0.0;
-    double *matY;
-    double *matH;
-    int newDim;
+    double *matY = malloc(N*N*sizeof(double));
 
     // Transpose matB for sequential memory access during multiply
-   	transposeMatrix(matB, matY, N);
+    transposeMatrix(matB, matY, N);
 
-    if (isPowerOfTwo(N)) {
+    // New matrix multiplication w\ loop tiling
+    for (i = 0; i < N; i += B) {
+        for (j = 0; j < N; j += B) {
+            for (m = 0; m < N; m+= B) {
 
-        matY = (double *) malloc((N+1)*(N+1)*sizeof(double));
-        matH = (double *) malloc((N+1)*(N+1)*sizeof(double));
-        padMatrix(matA, matH, N);
-        transposeAndPadMatrix(matB, matY, N);
+                for (x = i; x < MIN(i + B, N); x++) {
+                    for (y = j; y < MIN(j + B, N); y++) {
 
-        newDim = N + 1;
+                        temp = matC[y + x*N];
+                        for (z = m; z < MIN(m + B, N); z++) {
 
-        for (i = 0; i < newDim; i += B) {
-            for (j = 0; j < newDim; j += B) {
-                for (m = 0; m < newDim; m+= B) {
+                            temp += matA[x*N + z] * matY[y*N + z];
 
-                    for (x = i; x < MIN(i + B, newDim); x++) {
-                        for (y = j; y < MIN(j + B, newDim); y++) {
-
-                            if (y != N && x != N) temp = matC[y + x*N];
-                            for (z = m; z < MIN(m + B, newDim); z++) {
-
-                                temp += matA[x*N + z] * matY[y*N + z];
-
-                            }
-
-                            if (y != N && x != N) matC[y + x*N] = temp;
                         }
-                    }
-                }
-            }
-        }
 
-    } else {
-        matY = (double *) malloc(N*N*sizeof(double));
-        transposeMatrix(matB, matY, N);
-
-        for (i = 0; i < N; i += B) {
-            for (j = 0; j < N; j += B) {
-                for (m = 0; m < N; m+= B) {
-
-                    for (x = i; x < MIN(i + B, N); x++) {
-                        for (y = j; y < MIN(j + B, N); y++) {
-
-                            temp = matC[y + x*N];
-                            for (z = m; z < MIN(m + B, N); z++) {
-
-                                temp += matA[x*N + z] * matY[y*N + z];
-
-                            }
-
-                            matC[y + x*N] = temp;
-                        }
+                        matC[y + x*N] = temp;
                     }
                 }
             }
         }
     }
-
-    // New matrix multiplication w\ loop tiling
-    
     
 
 }
 
 // Transpose matrix matX
 static void transposeMatrix(const double *matX, double *matY, int N) {
-	int i, j;
-
-	for (i = 0; i < N; i++) {
-		for (j = 0; j < N; j++) {
-
-			matY[j + i*N] = matX[i + j*N];
-
-		}
-	}
-}
-
-// Pads matrix X with a column and row of zeroes to avoid cache superalignment on powers of two
-// Also transposes!
-static void transposeAndPadMatrix(const double *matX, double *matY, int N) {
-
-    int newDimensions;
     int i, j;
 
-    newDimensions = N + 1;
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
 
-
-    for (i = 0; i < newDimensions; i++) {
-        for (j = 0; j < newDimensions; j++) {
-
-            if (j == newDimensions - 1 || i == newDimensions - 1) {
-                matY[j + i*N] = 0;
-            }
-            else {
-                matY[j + i*N] = matX[i + j*N];
-            }
+            matY[j + i*N] = matX[i + j*N];
 
         }
     }
-
-}
-
-static void padMatrix(const double *matX, double *matY, int N) {
-
-    int i, j;
-    int newDimensions;
-
-    newDimensions = N + 1;
-
-    for (i = 0; i < newDimensions; i++) {
-        for (j = 0; j < newDimensions; j++) {
-
-            if (j == newDimensions - 1 || i == newDimensions - 1) {
-                matY[j + i*N] = 0;
-            }
-            else {
-                matY[j + i*N] = matX[j + i*N];
-            }
-
-        }
-    }
-
-}
-
-// Checks if number is a power of two via complement and compare
-// Source: http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
-// By Rick Regan
-static int isPowerOfTwo (unsigned int x) {
-  return ((x != 0) && ((x & (~x + 1)) == x));
 }
