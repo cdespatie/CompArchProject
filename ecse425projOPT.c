@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define B   (256 / sizeof(double))       // Block size fits inside one cache line!
+#define B   (64 / sizeof(double))       // Block size fits inside one cache line!
 
 #define MAX(a,b) ((a) > (b) ? a : b)
 #define MIN(a,b) ((a) < (b) ? a : b)
