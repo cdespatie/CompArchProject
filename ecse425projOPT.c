@@ -63,9 +63,6 @@ void matMult_opt(int N, const double *matA, const double *matB, double *matC) {
     double *matH;
     int newDim;
 
-    // Transpose matB for sequential memory access during multiply
-   	transposeMatrix(matB, matY, N);
-
     if (isPowerOfTwo(N)) {
 
         matY = (double *) malloc((N+1)*(N+1)*sizeof(double));
