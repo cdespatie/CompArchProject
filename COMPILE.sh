@@ -4,7 +4,7 @@
 # Always include debug symbols (-g) when using valgrind.
 # Sometimes you might want to turn on optimizations (-O2 or -O3), in
 # particular for the competition.
-FLAGS="-g -Wall"
+FLAGS="-g -Wall -O3"
 
 # List all the c files here
 SOURCE="main.c ecse425proj.c ecse425projOPT.c"
